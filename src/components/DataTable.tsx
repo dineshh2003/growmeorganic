@@ -28,7 +28,7 @@ const DataTableComponent: React.FC = () => {
     const [customText, setCustomText] = useState(''); // Text for overlay panel
     const op = useRef<OverlayPanel>(null); // Ref for the overlay panel
 
-    const fetchArtworks = async (page: number, rows: number) => {
+    const fetchArtworks = async (page: number) => { // Removed `rows` parameter
         setLoading(true);
         try {
             const response = await axios.get(`https://api.artic.edu/api/v1/artworks?page=${page}`);
@@ -54,12 +54,12 @@ const DataTableComponent: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchArtworks(1, rows); // Initial load, first page
+        fetchArtworks(1); // Updated to pass only the page number
     }, []);
 
     const onPageChange = (event: any) => {
         setFirst(event.first);
-        fetchArtworks(event.page + 1, event.rows); // Fetch new data on page change
+        fetchArtworks(event.page + 1); // Updated to pass only the page number
     };
 
     const onRowSelectChange = (rowData: Artwork, checked: boolean) => {
